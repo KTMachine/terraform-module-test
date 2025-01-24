@@ -59,7 +59,7 @@ resource "aws_lb" "lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg[each.key].id]
-  subnets            = [for k,v in var.network.subnets : aws_subnet.subnets[k].id]
+  subnets            = [for k, v in var.network.subnets : aws_subnet.subnets[k].id if endswith(k, "public")]
   enable_deletion_protection = false
 
   tags = {

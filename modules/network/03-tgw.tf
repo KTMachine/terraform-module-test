@@ -13,7 +13,7 @@ resource "aws_ec2_transit_gateway" "tgw" {
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-attachment" {
   for_each = var.network.vpcs
-  subnet_ids         = [for k,v in var.network.subnets : aws_subnet.subnets[k].id]
+  subnet_ids         = [for k, v in var.network.subnets : aws_subnet.subnets[k].id if endswith(k, "public")]
   transit_gateway_id = aws_ec2_transit_gateway.tgw[each.key].id
   vpc_id             = aws_vpc.vpcs[each.key].id
 }
